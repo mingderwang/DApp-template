@@ -51,7 +51,7 @@ function init() {
       package: WalletConnectProvider,
       options: {
         // Mikko's test key - don't copy as your mileage may vary
-        infuraId: '8043bb2cf99347b1bfadfb233c5325c0'
+        infuraId: "8043bb2cf99347b1bfadfb233c5325c0"
       }
     },
 
@@ -85,7 +85,12 @@ async function fetchAccountData() {
   // Get connected chain id from Ethereum node
   const chainId = await web3.eth.getChainId();
   // Load chain information over an HTTP API
-  const chainData = evmChains.getChain(chainId);
+  try {
+    const chainData = evmChains.getChain(chainId);
+  } catch (err) {
+    alert(err)
+    document.getElementById("demo").innerHTML = err.message;
+  }
   document.querySelector("#network-name").textContent = chainData.name;
 
   // Get list of accounts of the connected wallet
